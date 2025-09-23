@@ -13,3 +13,73 @@ body {
     color-scheme: dark;
   }
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  flex: 0 0 20%;
+}
+
+main {
+  flex: 1 1;
+}
+
+footer {
+  flex: 0 0 10%;
+}
+
+
+#sidebar nav a {
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+#sidebar nav a:hover {
+  background: #e3e3e3;
+}
+
+#sidebar nav a.active {
+  background: hsl(224, 98%, 58%);
+  color: white;
+}
+
+#sidebar nav a.pending {
+  animation: progress 2s infinite ease-in-out;
+  animation-delay: 200ms;
+}
+
+/* render bài đăng */
+.item-post {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.item-post>div>a {
+  color: #4b4848;
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.5rem;
+
+}
+
+.item-post>div>a:hover {
+  color: #1a73e8;
+  text-decoration: underline;
+}
+
+
+img.thumbnail-post {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 20px;
+  border-radius: 5px;
+}
