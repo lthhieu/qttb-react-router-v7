@@ -1,15 +1,17 @@
-import { Link } from "react-router"
-import type { IPosts, Meta } from "~/types/backend"
-import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import dayjs from "dayjs"
+import { useState } from "react"
+import { useNavigate } from "react-router"
+import type { IFormCategories, IForms, Meta } from "~/types/backend"
 
 interface IProps {
-    posts: IPosts[] | undefined, meta: Meta
+    forms: IForms[] | undefined,
+    meta: Meta,
+    formCategories: IFormCategories[]
 }
-export function Posts(props: IProps) {
-    const { posts, meta: IMeta } = props
-    const [titleSearch, setTitleSearch] = useState<string>('')
-    const [sort, setSort] = useState<string>("-createdAt");
+export function FormComponent(props: IProps) {
+    const { forms, meta: IMeta, formCategories } = props
+    const [nameSearch, setNameSearch] = useState<string>('')
+    const [cate, setCate] = useState<string>(formCategories[0]._id)
     const [meta, setMeta] = useState<Meta>({
         current: IMeta.current,
         pageSize: IMeta.pageSize,
@@ -17,8 +19,15 @@ export function Posts(props: IProps) {
         total: IMeta.total
     })
     let navigate = useNavigate();
-    const click = (item: IPosts) => {
-        navigate(`/tin-tuc/${item.slug}`);
+
+
+    const handleSearch = () => {
+        if (nameSearch == '') {
+            navigate(`/bieu-mau`);
+        }
+        else {
+            navigate(`?title=${nameSearch}`)
+        }
     }
 
     const goPage = (value: number) => {
@@ -26,14 +35,8 @@ export function Posts(props: IProps) {
         navigate(`?page=${value}`);
     }
 
-    const handleSearch = () => {
-        if (titleSearch == '') {
-            navigate(`/tin-tuc?sort=${sort}`);
-        }
-        else {
-            navigate(`?title=${titleSearch}&sort=${sort}`)
-        }
-    }
+    console.log(forms)
+
 
     return (
         <>
@@ -44,36 +47,42 @@ export function Posts(props: IProps) {
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                         </svg>
                     </div>
-                    <input value={titleSearch} onChange={(e) => { setTitleSearch(e.target.value) }} type="search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg outline-0 bg-gray-50 focus:border-blue-500" placeholder="Tìm kiếm theo tiêu đề bài đăng ..." />
+                    <input value={nameSearch} onChange={(e) => { setNameSearch(e.target.value) }} type="search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg outline-0 bg-gray-50 focus:border-blue-500" placeholder="Tìm kiếm theo tên biểu mẫu ..." />
 
                 </div>
                 <div className="w-[30%] border flex gap-2 p-1 px-6 border-gray-300 bg-gray-50 rounded-lg text-gray-700">
-                    <label>Sắp xếp theo:</label>
-                    <select onChange={(e) => { setSort(e.target.value) }} value={sort} className="outline-0">
-                        <option value="-createdAt">Bài đăng mới nhất</option>
-                        <option value="createdAt">Bài đăng cũ nhất</option>
+                    <label>Lọc theo:</label>
+                    <select
+                        onChange={(e) => { setCate(e.target.value) }} value={cate}
+                        className="outline-0">
+                        {formCategories.length > 0 && formCategories.map((item, index) => {
+                            return (<option key={index} value={item._id}>{item.name}</option>)
+                        })}
                     </select>
                 </div>
                 <div className="w-[20%]">
                     <button onClick={() => { handleSearch() }} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2">Tìm kiếm</button>
                 </div>
             </div>
-
-            <div className="grid md:grid-cols-3 grid-cols-1 gap-3">
-                {posts && posts.length > 0 ?
-                    <>
-                        {posts.map((item, index: number) => {
-                            return (
-                                <div onClick={() => click(item)} className='border cursor-pointer rounded-lg border-gray-300 p-2 mb-4' key={index}>
-                                    <p className="two-lines w-full block font-bold text-gray-600 leading-[32px] text-justify mb-2">{item.title}</p>
-                                    <div className="flex gap-2">
-                                        <img className='w-[30%] rounded-lg ' src={`data:${item.mimetype};base64,${item.thumbnail}`} />
-                                        <p className="three-lines w-full block leading-[32px] text-justify text-sm">{item.title}</p>
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </> : <span>Chưa có tin tức nào</span>}
+            <div className="mb-4">
+                <table className="w-full text-center">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên biểu mẫu</th>
+                        <th>Ngày ban hành</th>
+                        <th>File đính kèm</th>
+                    </tr>
+                    {forms && forms?.length > 0 ? forms.map((item, index) => {
+                        return (
+                            <tr key={item._id}>
+                                <td>{index + 1}</td>
+                                <td className="truncate">{item.name}</td>
+                                <td>{dayjs(item.issueDate).format("DD/MM/YYYY")}</td>
+                                <td>{item.file}</td>
+                            </tr>
+                        )
+                    }) : <span>Không có biểu mẫu nào</span>}
+                </table>
             </div>
             <nav className="w-full flex justify-end">
                 <ul className="flex items-center -space-x-px h-10 text-base">

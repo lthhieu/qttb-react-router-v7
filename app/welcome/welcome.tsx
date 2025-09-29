@@ -1,7 +1,7 @@
 export function Welcome() {
   return (
     <>
-      <div className="mx-[10%] my-[32px] leading-[42px]">
+      <div className="leading-[42px]">
         <ul className="list-disc">
           <li>Tên phòng: Quản trị - Thiết bị</li>
           <li>Tên tiếng Anh: Office of Equipment and Facilities Management</li>

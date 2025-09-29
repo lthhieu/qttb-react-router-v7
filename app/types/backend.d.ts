@@ -3,6 +3,13 @@ export interface IBackendRes<T> {
     message: string;
     success: boolean;
     data?: T;
+    meta?: Meta
+}
+export interface Meta {
+    "current": number,
+    "pageSize": number,
+    "pages": number,
+    "total": number
 }
 export interface IPosts {
     content: string
@@ -13,3 +20,23 @@ export interface IPosts {
     createdAt: Date
     _id: string
 }[]
+
+export interface IForms {
+    "_id": string,
+    "name": string,
+    "issueDate": Date,
+    "file": "link file",
+    "categoryFormId": {
+        "_id": string,
+        "name": string
+    },
+    "createdAt": Date,
+    "updatedAt": Date,
+}
+
+export interface IFormCategories {
+    "_id": string,
+    "name": string,
+    "createdAt": Date,
+    "updatedAt": Date,
+}

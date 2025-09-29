@@ -1,5 +1,5 @@
+import { ProcessComponent } from "~/components/process";
 import type { Route } from "./+types/home";
-import { Organization as OrganizationComponent } from "~/components/organization";
 export function meta({ }: Route.MetaArgs) {
     return [
         { title: "QTTB- Sơ đồ tổ chức" },
@@ -7,6 +7,6 @@ export function meta({ }: Route.MetaArgs) {
     ];
 }
 
-export default function Organization() {
-    return <OrganizationComponent />
+export default function Process() {
+    return <ProcessComponent />
 }
