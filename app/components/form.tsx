@@ -40,8 +40,8 @@ export function FormComponent(props: IProps) {
 
     return (
         <>
-            <div className="flex items-center gap-2 justify-between mb-5">
-                <div className="relative w-[50%]">
+            <div className="lg:flex lg:items-center space-x-2 space-y-2 justify-between mb-5">
+                <div className="relative xl:w-[50%] w-full">
                     <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
@@ -50,7 +50,7 @@ export function FormComponent(props: IProps) {
                     <input value={nameSearch} onChange={(e) => { setNameSearch(e.target.value) }} type="search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg outline-0 bg-gray-50 focus:border-blue-500" placeholder="Tìm kiếm theo tên biểu mẫu ..." />
 
                 </div>
-                <div className="w-[30%] border flex gap-2 p-1 px-6 border-gray-300 bg-gray-50 rounded-lg text-gray-700">
+                <div className="xl:w-[30%] w-[100%] border flex gap-2 p-1 px-6 border-gray-300 bg-gray-50 rounded-lg text-gray-700">
                     <label>Lọc theo:</label>
                     <select
                         onChange={(e) => { setCate(e.target.value) }} value={cate}
@@ -60,29 +60,36 @@ export function FormComponent(props: IProps) {
                         })}
                     </select>
                 </div>
-                <div className="w-[20%]">
+                <div className="xl:w-[20%] lg:w-[40%] w-full">
                     <button onClick={() => { handleSearch() }} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2">Tìm kiếm</button>
                 </div>
             </div>
             <div className="mb-4">
-                <table className="w-full text-center">
-                    <tr>
-                        <th>STT</th>
-                        <th>Tên biểu mẫu</th>
-                        <th>Ngày ban hành</th>
-                        <th>File đính kèm</th>
-                    </tr>
-                    {forms && forms?.length > 0 ? forms.map((item, index) => {
-                        return (
-                            <tr key={item._id}>
-                                <td>{index + 1}</td>
-                                <td className="truncate">{item.name}</td>
-                                <td>{dayjs(item.issueDate).format("DD/MM/YYYY")}</td>
-                                <td>{item.file}</td>
+                <div className="w-full bg-amber-300 overflow-x-auto">
+                    <table className="w-full text-center">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th className="min-w-[250px]">Tên biểu mẫu</th>
+                                <th className="min-w-[250px]">Ngày ban hành</th>
+                                <th className="min-w-[250px]">File đính kèm</th>
                             </tr>
-                        )
-                    }) : <span>Không có biểu mẫu nào</span>}
-                </table>
+                        </thead>
+                        <tbody>
+                            {forms && forms?.length > 0 ? forms.map((item, index) => {
+                                return (
+                                    <tr key={item._id}>
+                                        <td>{index + 1}</td>
+                                        <td className="truncate max-w-[200px]">{item.name}</td>
+                                        <td>{dayjs(item.issueDate).format("DD/MM/YYYY")}</td>
+                                        <td>{item.file}</td>
+                                    </tr>
+                                )
+                            }) : <span>Không có biểu mẫu nào</span>}
+                        </tbody>
+
+                    </table>
+                </div>
             </div>
             <nav className="w-full flex justify-end">
                 <ul className="flex items-center -space-x-px h-10 text-base">

@@ -37,8 +37,8 @@ export function Posts(props: IProps) {
 
     return (
         <>
-            <div className="flex items-center gap-2 justify-between mb-5">
-                <div className="relative w-[50%]">
+            <div className="lg:flex lg:items-center space-x-2 space-y-2 justify-between mb-5">
+                <div className="relative xl:w-[50%] w-full">
                     <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
@@ -47,19 +47,19 @@ export function Posts(props: IProps) {
                     <input value={titleSearch} onChange={(e) => { setTitleSearch(e.target.value) }} type="search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg outline-0 bg-gray-50 focus:border-blue-500" placeholder="Tìm kiếm theo tiêu đề bài đăng ..." />
 
                 </div>
-                <div className="w-[30%] border flex gap-2 p-1 px-6 border-gray-300 bg-gray-50 rounded-lg text-gray-700">
+                <div className="xl:w-[30%] w-[100%] border flex gap-2 p-1 px-6 border-gray-300 bg-gray-50 rounded-lg text-gray-700">
                     <label>Sắp xếp theo:</label>
                     <select onChange={(e) => { setSort(e.target.value) }} value={sort} className="outline-0">
                         <option value="-createdAt">Bài đăng mới nhất</option>
                         <option value="createdAt">Bài đăng cũ nhất</option>
                     </select>
                 </div>
-                <div className="w-[20%]">
+                <div className="xl:w-[20%] lg:w-[40%] w-full">
                     <button onClick={() => { handleSearch() }} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2">Tìm kiếm</button>
                 </div>
             </div>
 
-            <div className="grid md:grid-cols-3 grid-cols-1 gap-3">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3">
                 {posts && posts.length > 0 ?
                     <>
                         {posts.map((item, index: number) => {
