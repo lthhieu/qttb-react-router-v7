@@ -1,9 +1,9 @@
 import axios from '~/configs/axios';
 import type { IBackendRes, IForms } from '~/types/backend';
-const fetchForms = (page: number, limit: number, name?: string | null, sort?: string | null) => {
+const fetchForms = (page: number, limit: number, name?: string | null, categoryFormId?: string | null) => {
     let url = `forms?page=${page}&limit=${limit}`;
-    // if (title) url += `&title=/${title}/i`;
-    if (sort) url += `&sort=${sort}`;
+    if (name) url += `&name=/${name}/i`;
+    if (categoryFormId) url += `&categoryFormId=${categoryFormId}`;
     return axios.get<any, IBackendRes<IForms[]>>(url)
 }
 

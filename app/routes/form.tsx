@@ -2,6 +2,7 @@ import { FormComponent } from "~/components/form";
 import type { Route } from "./+types/home";
 import { fetchForms } from "~/api/forms";
 import { fetchFormCategories } from "~/api/formCategories";
+import { FileLink } from "~/utils/file.link";
 export function meta({ }: Route.MetaArgs) {
     return [
         { title: "QTTB- Biểu mẫu" },
@@ -12,12 +13,16 @@ export function meta({ }: Route.MetaArgs) {
 export async function loader({ request, }: Route.LoaderArgs) {
     const url = new URL(request.url)
     const page = url.searchParams.get("page")
-    // const title = url.searchParams.get("title")
-    const sort = url.searchParams.get("sort")
-    let response = await fetchForms(page ? +page : 1, 10, sort)
+    const name = url.searchParams.get("name")
+    const categoryFormId = url.searchParams.get("categoryFormId")
+    let response = await fetchForms(page ? +page : 1, 10, name, categoryFormId)
     let response1 = await fetchFormCategories()
     if (response.success && response1.success) {
-        return { meta: response.meta, forms: response.data, formCategories: response1.data }
+        const newData = response.data?.map((item, index) => ({
+            ...item,
+            filelink: FileLink(item.file, item.mimetype), // ghi đè lại file
+        }));
+        return { meta: response.meta, forms: newData, formCategories: response1.data }
     } else return { meta: null, posts: [], formCategories: [] }
 }
 

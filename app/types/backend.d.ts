@@ -32,6 +32,8 @@ export interface IForms {
     },
     "createdAt": Date,
     "updatedAt": Date,
+    "mimetype": string,
+    filelink?: string
 }
 
 export interface IFormCategories {

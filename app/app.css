@@ -52,53 +52,6 @@ footer {
   animation-delay: 200ms;
 }
 
-/* render bài đăng */
-.item-post {
-  /* display: flex;
-  align-items: center; */
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.item-post>div>a {
-  color: #4b4848;
-  margin: 0;
-  font-weight: 600;
-  font-size: 1.2rem;
-
-}
-
-.item-post>div>p {
-  font-size: 0.8rem;
-
-}
-
-.item-post>div>a:hover {
-  color: #1a73e8;
-}
-
-.item-post>img {
-  transition: transform 0.3s ease;
-}
-
-.item-post>img:hover {
-  transform: scale(1.01);
-}
-
-
-img.thumbnail-post {
-  width: 100%;
-  height: 50%;
-  object-fit: cover;
-  /* margin-right: 20px; */
-  border-radius: 5px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
 .two-lines {
   display: -webkit-box;
   -webkit-line-clamp: 2;

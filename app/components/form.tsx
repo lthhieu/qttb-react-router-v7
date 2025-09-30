@@ -2,6 +2,7 @@ import dayjs from "dayjs"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import type { IFormCategories, IForms, Meta } from "~/types/backend"
+import { FileLink } from "~/utils/file.link"
 
 interface IProps {
     forms: IForms[] | undefined,
@@ -11,7 +12,7 @@ interface IProps {
 export function FormComponent(props: IProps) {
     const { forms, meta: IMeta, formCategories } = props
     const [nameSearch, setNameSearch] = useState<string>('')
-    const [cate, setCate] = useState<string>(formCategories[0]._id)
+    const [cate, setCate] = useState<string>('all')
     const [meta, setMeta] = useState<Meta>({
         current: IMeta.current,
         pageSize: IMeta.pageSize,
@@ -22,11 +23,15 @@ export function FormComponent(props: IProps) {
 
 
     const handleSearch = () => {
-        if (nameSearch == '') {
+        if (nameSearch == '' && cate == 'all') {
             navigate(`/bieu-mau`);
         }
-        else {
-            navigate(`?title=${nameSearch}`)
+        else if (nameSearch != '' && cate == 'all') {
+            navigate(`?name=${nameSearch}`)
+        } else if (nameSearch == '' && cate != 'all') {
+            navigate(`?categoryFormId=${cate}`)
+        } else {
+            navigate(`?name=${nameSearch}&categoryFormId=${cate}`)
         }
     }
 
@@ -34,8 +39,8 @@ export function FormComponent(props: IProps) {
         setMeta(prev => ({ ...prev, current: value, }));
         navigate(`?page=${value}`);
     }
+    console.log(cate)
 
-    console.log(forms)
 
 
     return (
@@ -55,6 +60,7 @@ export function FormComponent(props: IProps) {
                     <select
                         onChange={(e) => { setCate(e.target.value) }} value={cate}
                         className="outline-0">
+                        <option value={'all'}>Tất cả</option>
                         {formCategories.length > 0 && formCategories.map((item, index) => {
                             return (<option key={index} value={item._id}>{item.name}</option>)
                         })}
@@ -66,23 +72,25 @@ export function FormComponent(props: IProps) {
             </div>
             <div className="mb-4">
                 <div className="w-full overflow-x-auto">
-                    <table className="w-full text-center">
+                    <table className="w-full text-left">
                         <thead>
                             <tr>
-                                <th>STT</th>
-                                <th className="min-w-[250px]">Tên biểu mẫu</th>
-                                <th className="min-w-[250px]">Ngày ban hành</th>
-                                <th className="min-w-[250px]">File đính kèm</th>
+                                <th className="pl-2">STT</th>
+                                <th className="min-w-[300px] pl-2">Tên biểu mẫu</th>
+                                <th className="min-w-[100px] pl-2">Ngày ban hành</th>
+                                <th className="min-w-[100px] pl-2">File đính kèm</th>
                             </tr>
                         </thead>
                         <tbody>
                             {forms && forms?.length > 0 ? forms.map((item, index) => {
                                 return (
                                     <tr key={item._id}>
-                                        <td>{index + 1}</td>
-                                        <td className="truncate max-w-[200px]">{item.name}</td>
-                                        <td>{dayjs(item.issueDate).format("DD/MM/YYYY")}</td>
-                                        <td>{item.file}</td>
+                                        <td className="pl-2">{index + 1}</td>
+                                        <td className="truncate max-w-[200px] pl-2">{item.name}</td>
+                                        <td className="pl-2">{dayjs(item.issueDate).format("DD/MM/YYYY")}</td>
+                                        <td className="pl-2">{<a className="text-blue-500 hover:underline" href={item.filelink} download={item.name} target="_blank" rel="noopener noreferrer">
+                                            File đính kèm
+                                        </a>}</td>
                                     </tr>
                                 )
                             }) : <span>Không có biểu mẫu nào</span>}
