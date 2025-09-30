@@ -65,7 +65,7 @@ export function FormComponent(props: IProps) {
                 </div>
             </div>
             <div className="mb-4">
-                <div className="w-full bg-amber-300 overflow-x-auto">
+                <div className="w-full overflow-x-auto">
                     <table className="w-full text-center">
                         <thead>
                             <tr>

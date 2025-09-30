@@ -48,10 +48,10 @@ export function Posts(props: IProps) {
 
                 </div>
                 <div className="xl:w-[30%] w-[100%] border flex gap-2 p-1 px-6 border-gray-300 bg-gray-50 rounded-lg text-gray-700">
-                    <label>Sắp xếp theo:</label>
+                    <label>Sắp xếp:</label>
                     <select onChange={(e) => { setSort(e.target.value) }} value={sort} className="outline-0">
-                        <option value="-createdAt">Bài đăng mới nhất</option>
-                        <option value="createdAt">Bài đăng cũ nhất</option>
+                        <option value="-createdAt">Mới nhất</option>
+                        <option value="createdAt">Cũ nhất</option>
                     </select>
                 </div>
                 <div className="xl:w-[20%] lg:w-[40%] w-full">
