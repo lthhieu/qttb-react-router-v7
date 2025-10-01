@@ -5,7 +5,7 @@ import type { IFormCategories, IForms, Meta } from "~/types/backend"
 import { FileLink } from "~/utils/file.link"
 
 interface IProps {
-    forms: IForms[] | undefined,
+    forms: IForms[],
     meta: Meta,
     formCategories: IFormCategories[]
 }
@@ -39,9 +39,6 @@ export function FormComponent(props: IProps) {
         setMeta(prev => ({ ...prev, current: value, }));
         navigate(`?page=${value}`);
     }
-    console.log(cate)
-
-
 
     return (
         <>
@@ -83,12 +80,13 @@ export function FormComponent(props: IProps) {
                         </thead>
                         <tbody>
                             {forms && forms?.length > 0 ? forms.map((item, index) => {
+                                const filelink = FileLink(item.file, item.mimetype);
                                 return (
                                     <tr key={item._id}>
                                         <td className="pl-2">{index + 1}</td>
                                         <td className="truncate max-w-[200px] pl-2">{item.name}</td>
                                         <td className="pl-2">{dayjs(item.issueDate).format("DD/MM/YYYY")}</td>
-                                        <td className="pl-2">{<a className="text-blue-500 hover:underline" href={item.filelink} download={item.name} target="_blank" rel="noopener noreferrer">
+                                        <td className="pl-2">{<a className="text-blue-500 hover:underline" href={filelink} download={item.name} target="_blank" rel="noopener noreferrer">
                                             File đính kèm
                                         </a>}</td>
                                     </tr>

@@ -25,7 +25,7 @@ export interface IForms {
     "_id": string,
     "name": string,
     "issueDate": Date,
-    "file": "link file",
+    "file": string,
     "categoryFormId": {
         "_id": string,
         "name": string
@@ -37,6 +37,29 @@ export interface IForms {
 }
 
 export interface IFormCategories {
+    "_id": string,
+    "name": string,
+    "createdAt": Date,
+    "updatedAt": Date,
+}
+
+export interface IRules {
+    "_id": string,
+    "bio": string,
+    "issueDate": Date,
+    "file": string,
+    "categoryRuleId": {
+        "_id": string,
+        "name": string
+    },
+    signNumber: string,
+    "createdAt": Date,
+    "updatedAt": Date,
+    "mimetype": string,
+    filelink?: string
+}
+
+export interface IRuleCategories {
     "_id": string,
     "name": string,
     "createdAt": Date,

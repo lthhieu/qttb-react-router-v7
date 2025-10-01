@@ -1,4 +1,4 @@
-import type { Route } from "./+types/home";
+import type { Route } from "./+types/posts";
 import { Posts as PostsComponent } from "~/components/posts";
 import { fetchPosts } from '~/api/posts'
 
@@ -21,5 +21,6 @@ export async function loader({ request, }: Route.LoaderArgs) {
 }
 
 export default function Posts({ loaderData }: Route.ComponentProps) {
-    return <PostsComponent posts={loaderData?.posts} meta={loaderData?.meta} />;
+    const { meta, posts } = loaderData
+    return <PostsComponent posts={posts} meta={meta} />;
 }

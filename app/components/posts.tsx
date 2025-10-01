@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 
 interface IProps {
-    posts: IPosts[] | undefined, meta: Meta
+    posts: IPosts[], meta: Meta
 }
 export function Posts(props: IProps) {
     const { posts, meta: IMeta } = props

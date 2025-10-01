@@ -1,5 +1,5 @@
 import { FormComponent } from "~/components/form";
-import type { Route } from "./+types/home";
+import type { Route } from "./+types/form";
 import { fetchForms } from "~/api/forms";
 import { fetchFormCategories } from "~/api/formCategories";
 import { FileLink } from "~/utils/file.link";
@@ -18,16 +18,14 @@ export async function loader({ request, }: Route.LoaderArgs) {
     let response = await fetchForms(page ? +page : 1, 10, name, categoryFormId)
     let response1 = await fetchFormCategories()
     if (response.success && response1.success) {
-        const newData = response.data?.map((item, index) => ({
-            ...item,
-            filelink: FileLink(item.file, item.mimetype), // ghi đè lại file
-        }));
-        return { meta: response.meta, forms: newData, formCategories: response1.data }
-    } else return { meta: null, posts: [], formCategories: [] }
+        return { meta: response.meta, forms: response.data, formCategories: response1.data }
+    }
+    return { meta: null, forms: [], formCategories: [] }
 }
 
 
 
-export default function Form({ loaderData, }: Route.ComponentProps) {
-    return <FormComponent forms={loaderData?.forms} meta={loaderData?.meta} formCategories={loaderData?.formCategories} />
+export default function Form({ loaderData }: Route.ComponentProps) {
+    const { meta, formCategories, forms } = loaderData
+    return <FormComponent forms={forms} meta={meta} formCategories={formCategories} />
 }
