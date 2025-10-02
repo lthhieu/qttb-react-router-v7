@@ -2,6 +2,7 @@ import { Link } from "react-router"
 import type { IPosts, Meta } from "~/types/backend"
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import { getPaginationRange } from "~/utils/pagination";
 
 interface IProps {
     posts: IPosts[], meta: Meta
@@ -18,7 +19,7 @@ export function Posts(props: IProps) {
     })
     let navigate = useNavigate();
     const click = (item: IPosts) => {
-        navigate(`/tin-tuc/${item.slug}`);
+        navigate(`/${item.slug}`);
     }
 
     const goPage = (value: number) => {
@@ -28,7 +29,7 @@ export function Posts(props: IProps) {
 
     const handleSearch = () => {
         if (titleSearch == '') {
-            navigate(`/tin-tuc?sort=${sort}`);
+            navigate(`?sort=${sort}`);
         }
         else {
             navigate(`?title=${titleSearch}&sort=${sort}`)
@@ -100,8 +101,27 @@ export function Posts(props: IProps) {
                         </span>
                     </li>
 
+                    {getPaginationRange(IMeta.current, IMeta.pages).map((page, idx) => (
+                        <li key={idx}>
+                            {page === "..." ? (
+                                <span className="px-3">...</span>
+                            ) : (
+                                <span
+                                    onClick={() => goPage(+page)}
+                                    className={
+                                        meta.current === page
+                                            ? "cursor-pointer z-10 flex items-center justify-center px-4 h-10 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                                            : "cursor-pointer flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                    }
+                                >
+                                    {page}
+                                </span>
+                            )}
+                        </li>
+                    ))}
 
-                    {Array.from({ length: IMeta.pages }, (_, i) => i + 1).map((page) => (
+
+                    {/* {Array.from({ length: IMeta.pages }, (_, i) => i + 1).map((page) => (
                         <li key={page}>
                             <span
                                 onClick={() => goPage(page)}
@@ -114,7 +134,7 @@ export function Posts(props: IProps) {
                                 {page}
                             </span>
                         </li>
-                    ))}
+                    ))} */}
 
                     <li>
                         <span

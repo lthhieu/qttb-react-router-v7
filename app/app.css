@@ -1,8 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: "Times New Roman", Times, serif;
 }
 
 html,
@@ -34,7 +33,7 @@ footer {
 
 
 #sidebar nav a {
-  padding: 10px 20px;
+  padding: 5px 10px;
   border-radius: 5px;
 }
 

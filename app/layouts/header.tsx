@@ -1,15 +1,16 @@
-import { NavLink } from "react-router"
+import { NavLink, useNavigate } from "react-router"
 import logo from '/logo.png'
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
+    let navigate = useNavigate();
     return (
         <header>
             <div id="sidebar" className="text-black px-[10%] py-6 flex justify-between border-b-[#ccc] border-b-2 items-center gap-30">
                 <div className="flex items-center gap-4 w-[20%]">
-                    <img className="w-[48px] md:w-[64px]" src={logo} />
+                    <img onClick={() => { navigate('/') }} className="w-[48px] md:w-[64px] cursor-pointer" src={logo} />
                     <div className="hidden lg:flex flex-col text-gray-700 text-center max-w-[230px]">
                         <span className="font-bold truncate">Trường ĐHSPKT Vĩnh Long</span>
                         <span className="font-bold truncate">Phòng Quản trị - Thiết bị</span>
@@ -65,10 +66,10 @@ export default function Header() {
 }
 
 const nav: { url: string, title: string }[] = [
-    { url: '/', title: 'Giới thiệu' },
+    { url: '/gioi-thieu', title: 'Giới thiệu' },
     { url: '/chuc-nang-nhiem-vu', title: 'Chức năng - Nhiệm vụ' },
     { url: '/van-ban-quy-dinh', title: 'Văn bản - Quy định' },
     { url: '/bieu-mau', title: 'Biểu mẫu' },
     { url: '/quy-trinh', title: 'Quy trình' },
-    { url: '/tin-tuc', title: 'Tin tức' },
+    { url: '/', title: 'Tin tức' },
 ]
